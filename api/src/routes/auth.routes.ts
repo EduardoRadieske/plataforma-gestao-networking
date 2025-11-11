@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { PrismaClient } from '@prismaG/client.ts';
+import { PrismaClient } from '@prismaG/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { AuthMiddleware } from '@middlewares/auth.ts';
-import { IAuthRequest } from '@interfaces/auth.interface.ts';
-import { Role } from '@enums/role.ts';
+import { AuthMiddleware } from '@middlewares/auth';
+import { IAuthRequest } from '@interfaces/auth.interface';
+import { Role } from '@enums/role';
 
 const router = Router();
 const prisma = new PrismaClient();

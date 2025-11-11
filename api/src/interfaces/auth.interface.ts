@@ -1,4 +1,4 @@
-import { Role } from '@enums/role.ts';
+import { Role } from '@enums/role';
 import { Request } from 'express';
 
 export interface IAuthUser {

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <div className="min-h-[calc(100vh-80px)] flex justify-center items-center">
+    <div className="min-h-[calc(100vh-120px)] flex justify-center items-center">
       <section className="text-center">
         <h2 className="text-3xl font-bold mb-3">Bem-vindo a Plataforma de Gestão para Grupos de Networking</h2>
         <p className="text-gray-600 mb-6">

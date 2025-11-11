@@ -1,5 +1,6 @@
 import { apiFetch, LevelApi } from '@/lib/api';
-import { IntencaoInput, IntencaoResponse } from '@typesP/intencao';
+import { IndicacaoInput, IndicacaoResponse } from '@/types/indicacao';
+import { UsuarioResponse } from '@/types/usuario';
 
 export const criarIndicacao = async (data: IndicacaoInput): Promise<IndicacaoResponse> => {
   return apiFetch<IndicacaoResponse>('/indicacoes', {

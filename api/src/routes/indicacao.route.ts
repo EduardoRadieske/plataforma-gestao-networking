@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { PrismaClient } from '@prismaG/client.ts';
-import { AuthMiddleware } from '@middlewares/auth.ts';
-import { IAuthRequest } from '@interfaces/auth.interface.ts';
-import { Role } from '@enums/role.ts';
+import { PrismaClient } from '@prismaG/client';
+import { AuthMiddleware } from '@middlewares/auth';
+import { IAuthRequest } from '@interfaces/auth.interface';
+import { Role } from '@enums/role';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
 router.get('/', AuthMiddleware.verify(Role.MEMBER), async (req: IAuthRequest, res) => {
   try {
     const indicacoes = await prisma.indicacao.findMany({
-     where: { idIndicado: req.user?.id },
+     where: { idIndicado: Number(req.user?.id) },
       orderBy: { criadoEm: 'desc' },
     });
     return res.status(200).json(indicacoes);
@@ -38,7 +38,7 @@ router.post('/', AuthMiddleware.verify(Role.MEMBER), async (req: IAuthRequest, r
 
     const novaIndicacao = await prisma.indicacao.create({
       data: {
-        idIndicador: req.user?.id,
+        idIndicador: Number(req.user?.id),
         idIndicado,
         contato,
         descricao,
