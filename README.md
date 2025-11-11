@@ -43,7 +43,7 @@ Execute as migrações do Prisma:
 npx prisma migrate dev
 ```
 
-### 4️⃣ Execução
+### 4️⃣ Execução Local
 ```bash
 npm run dev
 ```
@@ -69,7 +69,7 @@ NEXT_PUBLIC_PUBLIC_TOKEN=token_api_publico_para_frontend
 NEXT_PUBLIC_JWT_TOKEN=jwt_token_usuario_logado
 ```
 
-### 3️⃣ Execução
+### 3️⃣ Execução Local
 ```bash
 npm run dev
 ```
