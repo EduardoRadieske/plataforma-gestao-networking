@@ -1,0 +1,95 @@
+#######################################################################
+# 🌐 AMBIENTE
+#######################################################################
+
+# Dados de teste apenas
+@baseUrl = http://localhost:3000/api/v1
+@contentType = application/json
+@publicToken = pk_front_62b5e2e91e4e48d9a4a9c8c1bf8f59e2
+@privateToken = sk_private_1f6a93fbe72e4e0c99c77e318a654a7a9c35e8420f4b47acb1de6f7b0b1a9c8d
+
+# JWT Token Temporário
+@jwtToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tZSI6IkFkbWluIFRlc3RlIiwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2MjgxNTg0NiwiZXhwIjoxNzYyOTAyMjQ2fQ.7uC696wrYWsmLxthiK8M8aIyKMPc7YrGAsaMbUlr-50
+@jwtAdminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tZSI6IkFkbWluIFRlc3RlIiwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2MjgxNTg0NiwiZXhwIjoxNzYyOTAyMjQ2fQ.7uC696wrYWsmLxthiK8M8aIyKMPc7YrGAsaMbUlr-50
+
+
+#######################################################################
+# 🔐 AUTENTICAÇÃO
+#######################################################################
+
+### [AUTH] Registro de novo usuário (privada)
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+Authorization: Bearer {{privateToken}}
+
+{
+  "nome": "Admin Teste",
+  "email": "admin@example.com",
+  "password": "123456",
+  "role": "ADMIN"
+}
+
+###
+
+### [AUTH] Login de usuário (público)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+Authorization: Bearer {{publicToken}}
+
+{
+  "email": "admin@example.com",
+  "password": "123456"
+}
+
+### [AUTH] Obter informações do usuário autenticado (privado)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{jwtToken}}
+
+###
+
+### [AUTH] Registro de novo usuário (privada)
+
+POST {{baseUrl}}/auth/register/guest?token=
+Content-Type: {{contentType}}
+Authorization: Bearer {{publicToken}}
+
+{
+  "nome": "Convidado Teste",
+  "email": "convidado@example.com",
+  "password": "123456",
+}
+
+#######################################################################
+# 🙋 INTENÇÕES DE PARTICIPAÇÃO
+#######################################################################
+
+### [INTENÇÃO] Criar nova intenção (público)
+POST {{baseUrl}}/intencoes
+Content-Type: {{contentType}}
+Authorization: Bearer {{publicToken}}
+
+{
+  "nome": "Maria Souza",
+  "email": "maria@example.com",
+  "empresa": "Tech Solutions LTDA",
+  "mensagem": "Gostaria de participar do grupo."
+}
+
+###
+
+### [INTENÇÃO] Listar intenções (somente ADMIN)
+GET {{baseUrl}}/intencoes
+Authorization: Bearer {{jwtAdminToken}}
+
+###
+
+### [INTENÇÃO] Aprovar intenção (somente ADMIN)
+PUT {{baseUrl}}/intencoes/1/aprovar
+Authorization: Bearer {{jwtAdminToken}}
+
+###
+
+### [INTENÇÃO] Recusar intenção (somente ADMIN)
+PUT {{baseUrl}}/intencoes/1/recusar
+Authorization: Bearer {{jwtAdminToken}}
+

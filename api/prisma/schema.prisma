@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MEMBRO
+}
+
+enum StatusIntencao {
+  PENDENTE
+  APROVADA
+  RECUSADA
+}
+
+enum StatusIndicacao {
+  NOVA
+  EM_CONTATO
+  FECHADA
+  RECUSADA
+}
+
+model Usuario {
+  id           Int       @id @default(autoincrement())
+  nome         String    @db.VarChar(120)
+  email        String    @unique @db.VarChar(150)
+  senhaHash    String    @map("senha_hash")
+  role         Role
+  ativo        String    @default("S") @db.Char(1)
+  criadoEm     DateTime  @default(now()) @map("criado_em")
+
+  intencoesAprovadas IntencaoParticipacao[] @relation("UsuarioAprovador")
+  intencoesGeradas   IntencaoParticipacao[] @relation("UsuarioGerador")
+  indicacoesFeitas   Indicacao[]            @relation("UsuarioIndicador")
+  indicacoesRecebidas Indicacao[]           @relation("UsuarioIndicado")
+
+  @@map("usuarios")
+}
+
+model IntencaoParticipacao {
+  id               Int        @id @default(autoincrement())
+  nome             String     @db.VarChar(120)
+  email            String     @db.VarChar(150)
+  empresa          String     @db.VarChar(150)
+  mensagem         String?    @db.Text
+  status           StatusIntencao @default(PENDENTE)
+  criadoEm         DateTime   @default(now()) @map("criado_em")
+
+  idUsuarioAprov   Int?       @map("id_usuario_aprov")
+  idUsuarioGerado  Int?       @map("id_usuario_gerado")
+
+  usuarioAprovador Usuario?   @relation("UsuarioAprovador", fields: [idUsuarioAprov], references: [id])
+  usuarioGerador   Usuario?   @relation("UsuarioGerador", fields: [idUsuarioGerado], references: [id])
+  convite            Convite?   @relation("IntencaoToConvite")
+
+  @@map("intencoes_participacao")
+}
+
+model Indicacao {
+  id             Int           @id @default(autoincrement())
+  idIndicador    Int?           @map("id_indicador")
+  idIndicado     Int?           @map("id_indicado")
+  contato        String         @db.VarChar(150)
+  descricao      String         @db.Text
+  status         StatusIndicacao @default(NOVA)
+  criadoEm       DateTime       @default(now()) @map("criado_em")
+
+  usuarioIndicador Usuario? @relation("UsuarioIndicador", fields: [idIndicador], references: [id])
+  usuarioIndicado  Usuario? @relation("UsuarioIndicado", fields: [idIndicado], references: [id])
+
+  @@map("indicacoes")
+}
+
+model Convite {
+  id           Int        @id @default(autoincrement())
+  idIntencao   Int        @unique @map("id_intencao")
+  token        String     @unique
+  usado        Boolean    @default(false)
+  criadoEm     DateTime   @default(now()) @map("criado_em")
+  expiracao    DateTime   @default(dbgenerated("(NOW() + INTERVAL '7 days')"))
+
+  intencao     IntencaoParticipacao @relation("IntencaoToConvite", fields: [idIntencao], references: [id])
+
+  @@map("convites")
+}
