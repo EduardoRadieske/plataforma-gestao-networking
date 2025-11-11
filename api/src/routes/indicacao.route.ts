@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { PrismaClient } from '@prismaG/client';
-import { AuthMiddleware } from '@middlewares/auth';
-import { IAuthRequest } from '@interfaces/auth.interface';
-import { Role } from '@enums/role';
+import { PrismaClient } from '../generated/prisma/client';
+import { AuthMiddleware } from '../middlewares/auth';
+import { IAuthRequest } from '../interfaces/auth.interface';
+import { Role } from '../enums/role';
 
 const router = Router();
 const prisma = new PrismaClient();

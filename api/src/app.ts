@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import intencoesRoutes from '@routes/intencoes.routes';
-import authRoutes from '@routes/auth.routes';
-import conviteRoutes from '@routes/convite.routes';
-import indicacoesRoute from '@routes/indicacao.route';
+import intencoesRoutes from './routes/intencoes.routes';
+import authRoutes from './routes/auth.routes';
+import conviteRoutes from './routes/convite.routes';
+import indicacoesRoute from './routes/indicacao.route';
 
 const app = express();
 const baseURL = '/api/v1';

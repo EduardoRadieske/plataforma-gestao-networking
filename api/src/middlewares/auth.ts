@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { IAuthRequest, IAuthUser } from '@interfaces/auth.interface';
-import { Role } from '@enums/role';
+import { IAuthRequest, IAuthUser } from '../interfaces/auth.interface';
+import { Role } from '../enums/role';
 
 export class AuthMiddleware {
 

@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { AuthMiddleware } from '@middlewares/auth';
-import { IAuthRequest } from '@interfaces/auth.interface';
-import { Role } from '@enums/role';
+import { AuthMiddleware } from '../middlewares/auth';
+import { IAuthRequest } from '../interfaces/auth.interface';
+import { Role } from '../enums/role';
 import crypto from 'crypto';
-import { PrismaClient, StatusIntencao } from '@prismaG/client';
+import { PrismaClient, StatusIntencao } from '../generated/prisma/client';
 
 const router = Router();
 const prisma = new PrismaClient();

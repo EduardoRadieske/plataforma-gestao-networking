@@ -56,8 +56,16 @@ Authorization: Bearer {{publicToken}}
 {
   "nome": "Convidado Teste",
   "email": "convidado@example.com",
-  "password": "123456",
+  "password": "123456"
 }
+
+###
+
+### [AUTH] Registro de novo usuário (privada)
+
+GET {{baseUrl}}/convites/validar/:token
+Content-Type: {{contentType}}
+Authorization: Bearer {{publicToken}}
 
 #######################################################################
 # 🙋 INTENÇÕES DE PARTICIPAÇÃO
